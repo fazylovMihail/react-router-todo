@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`MainPage Снапшот тестирование 1`] = `
+<DocumentFragment>
+  <section
+    class="home"
+  >
+    <div
+      class="container"
+    >
+      <h1
+        class="home__heading"
+      >
+        Добро пожаловать!
+      </h1>
+      <p
+        class="home__text"
+      >
+        Выберите страницу, на которую хотите перейти
+      </p>
+      <a
+        data-discover="true"
+        href="/notes"
+      >
+        Заметки
+      </a>
+    </div>
+  </section>
+</DocumentFragment>
+`;

@@ -36,13 +36,13 @@ export function useNotes() {
     [notes],
   );
 
-  const addNote = (title: string, desc: string) => {
+  const addNote = (title: string, desc?: string) => {
     setNotes([
       ...notes,
       {
         id: crypto.randomUUID(),
         title,
-        desc,
+        ...(desc && { desc }),
       },
     ]);
   };
