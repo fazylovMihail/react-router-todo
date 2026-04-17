@@ -12,13 +12,19 @@ export const NotesForm: FC<NotesFormProps> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<NoteUi>({
     resolver: zodResolver(NoteUiScheme),
   });
 
+  const handleSubmitWithReset = (data: NoteUi) => {
+    onSubmit(data);
+    reset();
+  };
+
   return (
-    <form className="notes-form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="notes-form" onSubmit={handleSubmit(handleSubmitWithReset)}>
       <div className="container">
         <div className="notes-form__content">
           <h2 className="notes-form__heading">Создать заметку</h2>
