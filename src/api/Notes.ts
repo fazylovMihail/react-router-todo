@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import z from "zod";
 
 export const NoteScheme = z.object({
@@ -36,20 +36,23 @@ export function useNotes() {
     [notes],
   );
 
-  const addNote = (title: string, desc?: string) => {
-    setNotes([
-      ...notes,
+  const addNote = useCallback(({ title, desc }: NoteUi) => {
+    setNotes((prev) => [
+      ...prev,
       {
         id: crypto.randomUUID(),
         title,
         ...(desc && { desc }),
       },
     ]);
-  };
+  }, []);
 
-  const deleteNote = (id: string) => {
-    setNotes(notes.filter((note) => note.id !== id));
-  };
+  const deleteNote = useCallback((id: string) => {
+    setNotes((prev) => prev.filter((note) => note.id !== id));
+  }, []);
 
-  return [notes, addNote, deleteNote] as const;
+  return useMemo(
+    () => [notes, addNote, deleteNote] as const,
+    [notes, addNote, deleteNote],
+  );
 }
