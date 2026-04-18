@@ -56,3 +56,5 @@ export const NotesForm: FC<NotesFormProps> = memo(({ onAdd, onClose }) => {
     </form>
   );
 });
+
+NotesForm.displayName = "NotesForm";

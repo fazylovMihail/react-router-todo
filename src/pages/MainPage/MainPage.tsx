@@ -15,3 +15,5 @@ export const MainPage = () => {
     </>
   );
 };
+
+MainPage.displayName = "MainPage";

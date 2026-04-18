@@ -3,10 +3,14 @@ import userEvent from "@testing-library/user-event";
 import { NotesForm } from "./NotesForm";
 
 describe("NotesForm", () => {
-  const onSubmit = jest.fn();
+  const onAdd = jest.fn();
+  const onClose = jest.fn();
   const testValue = "lorem";
 
-  beforeEach(() => onSubmit.mockClear());
+  beforeEach(() => {
+    onAdd.mockClear();
+    onClose.mockClear();
+  });
 
   it("Проверка нахождения инпутов в DOM и тест тайпинга", async () => {
     const user = userEvent.setup();
@@ -34,7 +38,7 @@ describe("NotesForm", () => {
       await user.type(input, testValue);
 
     await user.click(submitBtn);
-    expect(onSubmit).toHaveBeenCalledWith({
+    expect(onAdd).toHaveBeenCalledWith({
       title: testValue,
       desc: testValue,
     });
@@ -53,7 +57,7 @@ describe("NotesForm", () => {
     await user.type(inputTitle, testValue);
     await user.click(submitBtn);
 
-    expect(onSubmit).toHaveBeenCalledWith({
+    expect(onAdd).toHaveBeenCalledWith({
       title: testValue,
       desc: "",
     });
@@ -72,7 +76,7 @@ describe("NotesForm", () => {
     await user.type(inputDesc, testValue);
     await user.click(submitBtn);
 
-    expect(onSubmit).toHaveBeenCalledTimes(0);
+    expect(onAdd).toHaveBeenCalledTimes(0);
 
     const errorLabel = getErrorLabel();
     expect(errorLabel).toBeInTheDocument();
@@ -86,7 +90,7 @@ describe("NotesForm", () => {
 
     await user.click(submitBtn);
 
-    expect(onSubmit).toHaveBeenCalledTimes(0);
+    expect(onAdd).toHaveBeenCalledTimes(0);
 
     const errorLabel = getErrorLabel();
     expect(errorLabel).toBeInTheDocument();
@@ -98,7 +102,7 @@ describe("NotesForm", () => {
   }
 
   function renderNotesForm(): RenderResult {
-    return render(<NotesForm onSubmit={onSubmit} />);
+    return render(<NotesForm onAdd={onAdd} onClose={onClose} />);
   }
 
   function getInputs(): Inputs {

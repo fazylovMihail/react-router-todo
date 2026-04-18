@@ -13,10 +13,7 @@ export const NotesListScheme = z.array(NoteScheme);
 
 export type NoteList = z.infer<typeof NotesListScheme>;
 
-export const NoteUiScheme = NoteScheme.pick({
-  title: true,
-  desc: true,
-});
+export const NoteUiScheme = NoteScheme.omit({ id: true });
 
 export type NoteUi = z.infer<typeof NoteUiScheme>;
 
@@ -52,7 +49,7 @@ export function useNotes() {
   }, []);
 
   return useMemo(
-    () => [notes, addNote, deleteNote] as const,
+    () => ({ notes, addNote, deleteNote }) as const,
     [notes, addNote, deleteNote],
   );
 }

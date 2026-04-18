@@ -2,20 +2,20 @@ import { useSearchParams } from "react-router-dom";
 import { useNotes } from "../../api";
 import { Button } from "../../ui";
 import { NoteCard } from "../../ui/NoteCard";
-import type { NoteUi } from "../../api";
 import { NotesForm } from "../NotesForm/NotesForm";
 import { useCallback } from "react";
 
 export const NotesPage = () => {
-  const [notes, addNote, deleteNote] = useNotes();
+  const { notes, addNote, deleteNote } = useNotes();
   const [searchParams, setSearchParams] = useSearchParams();
+  const FORM_KEY = "notes-form-open";
 
-  const isNotesFormOpen = Boolean(searchParams.get("notes-form-open")); // Параметр открытия формы
+  const isNotesFormOpen = Boolean(searchParams.get(FORM_KEY)); // Параметр открытия формы
 
   // Ф-я для открытия формы
   const handleOpenNotesForm = useCallback(() => {
     setSearchParams((prev) => {
-      prev.set("notes-form-open", "true");
+      prev.set(FORM_KEY, "true");
       return prev;
     });
   }, [setSearchParams]);
@@ -23,7 +23,7 @@ export const NotesPage = () => {
   // Ф-я для закрытия формы
   const handleCloseNotesForm = useCallback(() => {
     setSearchParams((prev) => {
-      prev.delete("notes-form-open");
+      prev.delete(FORM_KEY);
       return prev;
     });
   }, [setSearchParams]);
@@ -60,3 +60,5 @@ export const NotesPage = () => {
     </>
   );
 };
+
+NotesPage.displayName = "NotesPage";
