@@ -1,33 +1,32 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useNotes } from "../../api";
 import { Button } from "../../ui";
 import { NoteCard } from "../../ui/NoteCard";
-import type { NoteUi } from "../../api";
 import { NotesForm } from "../NotesForm/NotesForm";
+import { useCallback } from "react";
 
 export const NotesPage = () => {
-  const [notes, addNote, deleteNote] = useNotes();
+  const { notes, addNote, deleteNote } = useNotes();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const FORM_KEY = "notes-form-open";
 
-  const isNotesFormOpen = Boolean(searchParams.get("notes-form-open")); // Параметр открытия формы
+  const isNotesFormOpen = Boolean(searchParams.get(FORM_KEY)); // Параметр открытия формы
 
   // Ф-я для открытия формы
-  const handleOpenNotesForm = () => {
-    if (!isNotesFormOpen) {
-      setSearchParams({ "notes-form-open": "true" });
-    }
-  };
+  const handleOpenNotesForm = useCallback(() => {
+    setSearchParams((prev) => {
+      prev.set(FORM_KEY, "true");
+      return prev;
+    });
+  }, [setSearchParams]);
 
   // Ф-я для закрытия формы
-  const handleCloseNotesForm = () => {
-    navigate(-1);
-  };
-
-  const handleNotesFormSubmit = ({ title, desc }: NoteUi) => {
-    handleCloseNotesForm();
-    addNote(title, desc);
-  };
+  const handleCloseNotesForm = useCallback(() => {
+    setSearchParams((prev) => {
+      prev.delete(FORM_KEY);
+      return prev;
+    });
+  }, [setSearchParams]);
 
   return (
     <>
@@ -54,8 +53,12 @@ export const NotesPage = () => {
             ))}
           </ul>
         </div>
-        {isNotesFormOpen && <NotesForm onSubmit={handleNotesFormSubmit} />}
+        {isNotesFormOpen && (
+          <NotesForm onAdd={addNote} onClose={handleCloseNotesForm} />
+        )}
       </section>
     </>
   );
 };
+
+NotesPage.displayName = "NotesPage";

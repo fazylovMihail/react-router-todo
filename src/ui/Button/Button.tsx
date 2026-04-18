@@ -11,3 +11,5 @@ export const Button: FC<ButtonProps> = ({ modificators = [], ...props }) => {
 
   return <button {...props} className={className}></button>;
 };
+
+Button.displayName = 'Button';

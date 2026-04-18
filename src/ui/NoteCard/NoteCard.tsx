@@ -17,3 +17,5 @@ export const NoteCard: FC<NoteCardProps> = ({ id, title, desc, onDelete }) => {
     </div>
   );
 };
+
+NoteCard.displayName = "NotesCard";
