@@ -9,7 +9,7 @@ interface NotesFormProps {
   onClose: () => void;
 }
 
-export const NotesForm: FC<NotesFormProps> = memo(({ onAdd, onClose }) => {
+const NotesForm: FC<NotesFormProps> = memo(({ onAdd, onClose }) => {
   const {
     register,
     handleSubmit,
@@ -58,3 +58,5 @@ export const NotesForm: FC<NotesFormProps> = memo(({ onAdd, onClose }) => {
 });
 
 NotesForm.displayName = "NotesForm";
+
+export default NotesForm;

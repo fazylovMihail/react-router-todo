@@ -2,10 +2,11 @@ import { useSearchParams } from "react-router-dom";
 import { useNotes } from "../../api";
 import { Button } from "../../ui";
 import { NoteCard } from "../../ui/NoteCard";
-import { NotesForm } from "../NotesForm/NotesForm";
-import { useCallback } from "react";
+import { lazy, Suspense, useCallback } from "react";
 
-export const NotesPage = () => {
+const LazyNotesForm = lazy(() => import("../NotesForm"));
+
+const NotesPage = () => {
   const { notes, addNote, deleteNote } = useNotes();
   const [searchParams, setSearchParams] = useSearchParams();
   const FORM_KEY = "notes-form-open";
@@ -54,7 +55,9 @@ export const NotesPage = () => {
           </ul>
         </div>
         {isNotesFormOpen && (
-          <NotesForm onAdd={addNote} onClose={handleCloseNotesForm} />
+          <Suspense fallback={null}>
+            <LazyNotesForm onAdd={addNote} onClose={handleCloseNotesForm} />
+          </Suspense>
         )}
       </section>
     </>
@@ -62,3 +65,5 @@ export const NotesPage = () => {
 };
 
 NotesPage.displayName = "NotesPage";
+
+export default NotesPage;

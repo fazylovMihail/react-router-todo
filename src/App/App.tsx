@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { MainPage } from "../pages/MainPage";
-import { NotesPage } from "../pages/NotesPage/NotesPage";
+import { lazy, Suspense } from "react";
+
+const LazyMainPage = lazy(() => import("../pages/MainPage"));
+const LazyNotesPage = lazy(() => import("../pages/NotesPage"));
 
 export default function App() {
   return (
@@ -9,10 +11,12 @@ export default function App() {
         <div className="container"></div>
       </header>
       <main>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/notes" element={<NotesPage />} />
-        </Routes>
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <Routes>
+            <Route path="/" element={<LazyMainPage />} />
+            <Route path="/notes" element={<LazyNotesPage />} />
+          </Routes>
+        </Suspense>
       </main>
     </BrowserRouter>
   );

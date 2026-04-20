@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { MainPage } from "./MainPage";
+import MainPage from "./MainPage";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { NotesPage } from "../NotesPage/NotesPage";
+import NotesPage from "../NotesPage/NotesPage";
 
 describe("MainPage", () => {
   it("Снапшот тестирование", () => {
