@@ -1,6 +1,6 @@
 import { render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { NotesForm } from "./NotesForm";
+import NotesForm from "./NotesForm";
 
 describe("NotesForm", () => {
   const onAdd = jest.fn();

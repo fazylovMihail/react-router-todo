@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { NotesPage } from "./NotesPage";
+import NotesPage from "./NotesPage";
 import { MemoryRouter } from "react-router-dom";
 
 describe("NotesPage", () => {
