@@ -3,20 +3,22 @@ import { useNotes } from "../../api";
 import { Button } from "../../ui";
 import { NoteCard } from "../../ui/NoteCard";
 import { lazy, Suspense, useCallback } from "react";
+import { QUERY_PARAMS } from "../../constants";
 
 const LazyNotesForm = lazy(() => import("../NotesForm"));
 
 const NotesPage = () => {
   const { notes, addNote, deleteNote } = useNotes();
   const [searchParams, setSearchParams] = useSearchParams();
-  const FORM_KEY = "notes-form-open";
 
-  const isNotesFormOpen = Boolean(searchParams.get(FORM_KEY)); // Параметр открытия формы
+  const isNotesFormOpen = Boolean(
+    searchParams.get(QUERY_PARAMS.NOTES_FORM_OPEN),
+  ); // Параметр открытия формы
 
   // Ф-я для открытия формы
   const handleOpenNotesForm = useCallback(() => {
     setSearchParams((prev) => {
-      prev.set(FORM_KEY, "true");
+      prev.set(QUERY_PARAMS.NOTES_FORM_OPEN, "true");
       return prev;
     });
   }, [setSearchParams]);
@@ -24,7 +26,7 @@ const NotesPage = () => {
   // Ф-я для закрытия формы
   const handleCloseNotesForm = useCallback(() => {
     setSearchParams((prev) => {
-      prev.delete(FORM_KEY);
+      prev.delete(QUERY_PARAMS.NOTES_FORM_OPEN);
       return prev;
     });
   }, [setSearchParams]);
